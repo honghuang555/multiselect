@@ -1,6 +1,3 @@
-## 0.0.5
-* Updated dependencies
-
 ## 0.0.4
 * Updated package description
 * formatted multiselect.dart
