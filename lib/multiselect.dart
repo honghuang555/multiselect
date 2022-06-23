@@ -66,6 +66,9 @@ class DropDownMultiSelect extends StatefulWidget {
   /// a function to build custom menu items
   final Widget Function(String option)? menuItembuilder;
 
+  /// defines whether the widget is read-only
+  final bool readOnly;
+
   const DropDownMultiSelect({
     Key? key,
     required this.options,
@@ -77,6 +80,7 @@ class DropDownMultiSelect extends StatefulWidget {
     this.isDense = false,
     this.enabled = true,
     this.decoration,
+    this.readOnly=true
   }) : super(key: key);
   @override
   _DropDownMultiSelectState createState() => _DropDownMultiSelectState();
@@ -145,17 +149,19 @@ class _DropDownMultiSelectState extends State<DropDownMultiSelect> {
                                 );
                         }),
                         value: x,
-                        onTap: () {
-                          if (widget.selectedValues.contains(x)) {
-                            var ns = widget.selectedValues;
-                            ns.remove(x);
-                            widget.onChanged(ns);
-                          } else {
-                            var ns = widget.selectedValues;
-                            ns.add(x);
-                            widget.onChanged(ns);
-                          }
-                        },
+                        onTap: !widget.readOnly
+                            ? () {
+                                if (widget.selectedValues.contains(x)) {
+                                  var ns = widget.selectedValues;
+                                  ns.remove(x);
+                                  widget.onChanged(ns);
+                                } else {
+                                  var ns = widget.selectedValues;
+                                  ns.add(x);
+                                  widget.onChanged(ns);
+                                }
+                              }
+                            : null,
                       ))
                   .toList(),
             ),
